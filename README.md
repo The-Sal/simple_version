@@ -77,11 +77,11 @@ simple_version init /path/to/project
 
 ```bash
 # First run - initialize
-simple_version run -- init
+simple_version run init
 # Output: Initialized versionx.json with version 0.0.0
 
 # After modifying code
-simple_version run -- bump
+simple_version run bump
 # Output: Bumped version: 0.0.0 -> 0.0.1
 #         Updated versionx.json and appended to changelog.txt
 ```
