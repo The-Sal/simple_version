@@ -1,5 +1,5 @@
 mod objs;
-use clap::{Parser, Subcommand};
+use clap::{CommandFactory, Parser, Subcommand};
 use objs::*;
 use sha2::Digest;
 use std::fs;
@@ -233,7 +233,15 @@ fn append_changelog(changes: &Changes, version: &str) {
 fn main() {
     let cli = Cli::parse();
 
-    let command = cli.command.unwrap_or(Commands::Bump);
+    let command = match cli.command {
+        Some(cmd) => cmd,
+        None => {
+            let mut cmd = Cli::command();
+            cmd.print_help().unwrap();
+            println!();
+            std::process::exit(0);
+        }
+    };
 
     match command {
         Commands::Init => {
