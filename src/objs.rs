@@ -32,9 +32,7 @@ impl Changes {
         if self.added.len() > 0 {
             change_log.push_str("Added:\n");
             update_log(&self.added, &mut change_log, "    +");
-
         }
-
 
         if self.changed.len() > 0 {
             change_log.push_str("Changes:\n");

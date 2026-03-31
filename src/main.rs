@@ -5,43 +5,12 @@ use sha2::Digest;
 use std::fs;
 use std::io::Write;
 use std::path::Path;
-use std::process::Command;
+
 use syn::spanned::Spanned;
 use syn::Item;
 
 const VERSION_FILE: &str = "version.json";
 const CHANGELOG_FILE: &str = "changelog.txt";
-
-fn check_git_status() -> Result<(), String> {
-    let output = Command::new("git")
-        .args(&["status", "--porcelain", "--untracked-files=no"])
-        .output()
-        .map_err(|e| format!("Failed to run git status: {}", e))?;
-
-    if !output.status.success() {
-        return Err("Git status command failed".to_string());
-    }
-
-    let stdout = String::from_utf8_lossy(&output.stdout);
-    if !stdout.trim().is_empty() {
-        return Err("Error: Uncommitted files detected. Please commit or stash your changes before running simple_version.".to_string());
-    }
-
-    Ok(())
-}
-
-fn get_git_hash() -> Option<String> {
-    let output = Command::new("git")
-        .args(&["rev-parse", "HEAD"])
-        .output()
-        .ok()?;
-
-    if output.status.success() {
-        Some(String::from_utf8_lossy(&output.stdout).trim().to_string())
-    } else {
-        None
-    }
-}
 
 #[derive(Parser)]
 #[command(name = "simple_version")]
@@ -59,7 +28,7 @@ struct Cli {
 enum Commands {
     /// Initialize version.json with current code state
     Init,
-    /// Bump version based on code changes and update changelog (requires clean git state)
+    /// Bump version based on code changes and update changelog
     Bump,
     /// Force a major version bump
     Major,
@@ -224,8 +193,7 @@ fn append_changelog(changes: &Changes, version: &str) {
         .open(CHANGELOG_FILE)
         .expect("Failed to open changelog file");
 
-    let git_hash = get_git_hash().unwrap_or_else(|| "unknown".to_string());
-    writeln!(file, "Version {} ({})", version, git_hash).expect("Failed to write to changelog");
+    writeln!(file, "Version {}", version).expect("Failed to write to changelog");
     writeln!(file, "{}", changes.generate_change_log()).expect("Failed to write changes");
     writeln!(file, "{}", "=".repeat(100)).expect("Failed to write separator");
 }
@@ -262,11 +230,6 @@ fn main() {
         }
 
         Commands::Bump => {
-            if let Err(e) = check_git_status() {
-                eprintln!("{}", e);
-                std::process::exit(1);
-            }
-
             let symbols = scan_directory(&cli.path);
 
             let mut table = match load_version_file() {
@@ -302,11 +265,6 @@ fn main() {
         }
 
         Commands::Major => {
-            if let Err(e) = check_git_status() {
-                eprintln!("{}", e);
-                std::process::exit(1);
-            }
-
             let symbols = scan_directory(&cli.path);
 
             let mut table = match load_version_file() {
