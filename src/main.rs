@@ -227,7 +227,7 @@ fn append_changelog(changes: &Changes, version: &str) {
     let git_hash = get_git_hash().unwrap_or_else(|| "unknown".to_string());
     writeln!(file, "Version {} ({})", version, git_hash).expect("Failed to write to changelog");
     writeln!(file, "{}", changes.generate_change_log()).expect("Failed to write changes");
-    writeln!(file).expect("Failed to write newline");
+    writeln!(file, "{}", "=".repeat(100)).expect("Failed to write separator");
 }
 
 fn main() {
