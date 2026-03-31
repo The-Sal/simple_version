@@ -19,23 +19,23 @@ Simple Version tracks changes to Rust functions and structs to automatically man
 ## Installation
 
 ```bash
-cargo build --release
+cargo build -r && mv ./target/release/simple_version /usr/local/bin/simple_version
 ```
 
 ## Usage
 
 ```bash
 # Initialize version tracking (creates version.json)
-cargo run -- init
+simple_version run -- init
 
 # Check for changes and auto-bump version
-cargo run -- bump
+simple_version run -- bump
 
 # Force a major version bump
-cargo run -- major
+simple_version run -- major
 
 # Scan a specific directory
-cargo run -- init /path/to/project
+simple_version run -- init /path/to/project
 ```
 
 ## Files
