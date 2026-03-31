@@ -1,0 +1,63 @@
+{
+  "symbols_map": {
+    "extract_symbols": [
+      "abac50a5aff1c33770d502db64508f212895c52e7cf2b99aaccecfd15481654d",
+      "function"
+    ],
+    "load_gitignore": [
+      "9a1e83983d0d7e79f9d41da3b3055e7f88a174c9c3b7a9e273a61bc19341e1de",
+      "function"
+    ],
+    "scan_directory": [
+      "3cbbc6b4af3f794ef5fba0037de8ea35e597cda7e4b37c638d56fca3f6812e28",
+      "function"
+    ],
+    "should_ignore": [
+      "6e8e5122cec85e2c3bd2902ec4a1c4136a137e7506761f16e85918b7c6bb34e7",
+      "function"
+    ],
+    "Cli": [
+      "ddb1f9ac87b6eff2402881b554408a8800751e22fe838c764df5af29e2310b4d",
+      "struct"
+    ],
+    "SymbolTable": [
+      "3c7463e3251b9fea1e0914f54c3680d58c85c0017eacdf26baede24527556f7c",
+      "struct"
+    ],
+    "Changes": [
+      "08416ec6f13f336c7b6fac0b452cf02bf87f13a7654b29299048c8725e6caa8a",
+      "struct"
+    ],
+    "load_version_file": [
+      "d558f758253bdc77329e63caa250e807da167e95bd1f2c55aa9bf9b6f3dcdec1",
+      "function"
+    ],
+    "GenericSymbol": [
+      "1080ffe485c33a93bd4dccf9f579622f2af63f0c93e6097748e4523eb4de8fd8",
+      "struct"
+    ],
+    "append_changelog": [
+      "959a931c24c058482a9a238e57588d98add3008a0d8e3a5f3ab40e3bd15d452e",
+      "function"
+    ],
+    "scan_directory_recursive": [
+      "ff48c8538721f6ce309bc7460ac685899f0a89c5db0db8a80659d878c5478cc3",
+      "function"
+    ],
+    "save_version_file": [
+      "e969e2f6dba8bc6c05a584747b762d6bd7b37a32d53e970f1830abbcddc5b9b1",
+      "function"
+    ],
+    "update_log": [
+      "2e8edd1fcbec5d4f2ed7739480a332bf11d9659b48c40eec2866247ec1616fb1",
+      "function"
+    ],
+    "main": [
+      "8d00af4c199ab2733e89dfef897987af78d6dcf105ec0f1aee429e557fb75bb2",
+      "function"
+    ]
+  },
+  "major_version": 2,
+  "minor_version": 1,
+  "patch_version": 0
+}

@@ -9,7 +9,7 @@ use std::path::Path;
 use syn::spanned::Spanned;
 use syn::Item;
 
-const VERSION_FILE: &str = "version.json";
+const VERSION_FILE: &str = "versionx.json";
 const CHANGELOG_FILE: &str = "changelog.txt";
 
 #[derive(Parser)]
@@ -26,7 +26,7 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Initialize version.json with current code state
+    /// Initialize versionx.json with current code state
     Init,
     /// Bump version based on code changes and update changelog
     Bump,
