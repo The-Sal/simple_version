@@ -28,12 +28,24 @@ impl Changes {
 
     pub(crate) fn generate_change_log(&self) -> String {
         let mut change_log = String::new();
-        change_log.push_str("Changes:\n");
-        update_log(&self.changed, &mut change_log, "    Changed");
-        change_log.push_str("Removed:\n");
-        update_log(&self.removed, &mut change_log, "    Removed");
-        change_log.push_str("Added:\n");
-        update_log(&self.added, &mut change_log, "    Added");
+
+        if self.added.len() > 0 {
+            change_log.push_str("Added:\n");
+            update_log(&self.added, &mut change_log, "    +");
+
+        }
+
+
+        if self.changed.len() > 0 {
+            change_log.push_str("Changes:\n");
+            update_log(&self.changed, &mut change_log, "    *");
+        }
+
+        if self.removed.len() > 0 {
+            change_log.push_str("Removed:\n");
+            update_log(&self.removed, &mut change_log, "    -");
+        }
+
         change_log
     }
 
