@@ -1,0 +1,15 @@
+[package]
+name = "simple_version"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+hex = "0.4.3"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.149"
+sha2 = "0.10"           # 0.11.0 doesn't exist; latest stable is 0.10.x
+syn = { version = "2", features = ["full", "extra-traits"] }
+proc-macro2 = { version = "1", features = ["span-locations"] }  # ← key addition
+walkdir = "2"
+anyhow = "1"
+clap = { version = "4.6.0", features = ["derive"] }
