@@ -26,16 +26,16 @@ cargo build -r && mv ./target/release/simple_version /usr/local/bin/simple_versi
 
 ```bash
 # Initialize version tracking (creates version.json)
-simple_version run -- init
+simple_version init
 
 # Check for changes and auto-bump version
-simple_version run -- bump
+simple_version bump
 
 # Force a major version bump
-simple_version run -- major
+simple_version major
 
 # Scan a specific directory
-simple_version run -- init /path/to/project
+simple_version init /path/to/project
 ```
 
 ## Files
