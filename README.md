@@ -85,7 +85,3 @@ simple_version run bump
 # Output: Bumped version: 0.0.0 -> 0.0.1
 #         Updated versionx.json and appended to changelog.txt
 ```
-
-## License
-
-MIT
