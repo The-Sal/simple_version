@@ -32,6 +32,8 @@ enum Commands {
     Bump,
     /// Force a major version bump
     Major,
+    /// Install simple_version to /usr/local/bin
+    Install,
 }
 
 fn extract_symbols(file_path: &str) -> Vec<GenericSymbol> {
@@ -322,6 +324,15 @@ fn main() {
                 "Updated {} and appended to {}",
                 VERSION_FILE, CHANGELOG_FILE
             );
+        },
+        Commands::Install => {
+            let current_dir = std::env::current_dir().expect("Failed to get current directory");
+            let target_dir = current_dir.join("target").join("release");
+            let binary_name = "simple_version";
+            let binary_path = target_dir.join(binary_name);
+            // now we can copy the binary to the target directory
+            std::fs::copy(binary_path, "/usr/local/bin/simple_version").expect("Failed to copy binary");
+            println!("Binary installed successfully at /usr/local/bin/simple_version");
         }
     }
 }
