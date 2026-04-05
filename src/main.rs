@@ -7,7 +7,7 @@ use std::io::Write;
 use std::path::Path;
 
 use syn::spanned::Spanned;
-use syn::Item;
+use syn::{ImplItem, Item};
 
 const VERSION_FILE: &str = "versionx.json";
 const CHANGELOG_FILE: &str = "changelog.txt";
@@ -75,6 +75,33 @@ fn extract_symbols(file_path: &str) -> Vec<GenericSymbol> {
                 hash: extract_hash,
                 type_of: ObjectType::Struct,
             });
+        }
+        if let Item::Impl(impl_block) = &item {
+            let type_name = match impl_block.self_ty.as_ref() {
+                syn::Type::Path(tp) => tp
+                    .path
+                    .segments
+                    .last()
+                    .map(|s| s.ident.to_string())
+                    .unwrap_or_default(),
+                _ => String::new(),
+            };
+            for impl_item in &impl_block.items {
+                if let ImplItem::Fn(method) = impl_item {
+                    let method_name = method.sig.ident.to_string();
+                    let symbol_name = format!("{}::{}", type_name, method_name);
+                    let span = method.span();
+                    let start_line = span.start().line;
+                    let end_line = span.end().line;
+                    let extract = lines[(start_line - 1)..end_line].join("\n");
+                    let extract_hash = hex::encode(sha2::Sha256::digest(extract.as_bytes()));
+                    symbols.push(GenericSymbol {
+                        name: symbol_name,
+                        hash: extract_hash,
+                        type_of: ObjectType::Method,
+                    });
+                }
+            }
         }
     }
 

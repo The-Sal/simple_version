@@ -56,6 +56,7 @@ impl Changes {
 pub(crate) enum ObjectType {
     Function,
     Struct,
+    Method,
 }
 
 impl fmt::Display for ObjectType {
@@ -63,6 +64,7 @@ impl fmt::Display for ObjectType {
         match self {
             ObjectType::Function => write!(f, "function"),
             ObjectType::Struct => write!(f, "struct"),
+            ObjectType::Method => write!(f, "method"),
         }
     }
 }
@@ -75,6 +77,7 @@ impl Serialize for ObjectType {
         match self {
             ObjectType::Function => serializer.serialize_str("function"),
             ObjectType::Struct => serializer.serialize_str("struct"),
+            ObjectType::Method => serializer.serialize_str("method"),
         }
     }
 }
@@ -88,6 +91,7 @@ impl<'de> Deserialize<'de> for ObjectType {
         match s.as_str() {
             "function" => Ok(ObjectType::Function),
             "struct" => Ok(ObjectType::Struct),
+            "method" => Ok(ObjectType::Method),
             _ => Err(serde::de::Error::custom("invalid ObjectType")),
         }
     }
