@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
 use std::fmt;
+use std::collections::HashMap;
+use serde::{Deserialize, Serialize};
 
 pub(crate) struct Changes {
     pub(crate) changed: Vec<(String, ObjectType)>, // hash change

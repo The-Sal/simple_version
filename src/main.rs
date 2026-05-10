@@ -1,13 +1,13 @@
 mod objs;
-use clap::{CommandFactory, Parser, Subcommand};
 use objs::*;
-use sha2::Digest;
 use std::fs;
+use sha2::Digest;
 use std::io::Write;
 use std::path::Path;
-
 use syn::spanned::Spanned;
 use syn::{ImplItem, Item};
+use clap::{CommandFactory, Parser, Subcommand};
+
 
 const VERSION_FILE: &str = "versionx.json";
 const CHANGELOG_FILE: &str = "changelog.txt";
