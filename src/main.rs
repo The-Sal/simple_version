@@ -256,6 +256,40 @@ fn main() {
                 VERSION_FILE,
                 table.version_string()
             );
+
+            let git_dir = Path::new(&cli.path).join(".git");
+            if git_dir.exists() && git_dir.is_dir() {
+                let hook_path = git_dir.join("hooks").join("pre-commit");
+                let hook_content = if hook_path.exists() {
+                    fs::read_to_string(&hook_path).unwrap_or_default()
+                } else {
+                    String::new()
+                };
+
+                if hook_content.contains("simple_version") {
+                    println!("Pre-commit hook already contains simple_version, skipping.");
+                } else {
+                    let mut new_hook = hook_content.clone();
+                    if !new_hook.is_empty() && !new_hook.ends_with('\n') {
+                        new_hook.push('\n');
+                    }
+                    new_hook.push_str("simple_version bump\n");
+
+                    fs::write(&hook_path, &new_hook).expect("Failed to write pre-commit hook");
+
+                    #[cfg(unix)]
+                    {
+                        use std::os::unix::fs::PermissionsExt;
+                        let metadata = fs::metadata(&hook_path).expect("Failed to get hook metadata");
+                        let mut permissions = metadata.permissions();
+                        permissions.set_mode(0o755);
+                        fs::set_permissions(&hook_path, permissions).expect("Failed to set hook permissions");
+                    }
+
+                    println!("Pre-commit hook installed:");
+                    println!("{}", new_hook);
+                }
+            }
         }
 
         Commands::Bump => {
